@@ -185,7 +185,7 @@ export default function SingleProduct() {
     };
 
   async function deleteItem(delid){ 
-    axios.delete("http://localhost:3000/api/cart", { data: {_id : delid} }).then(res=> cartData()) ;   
+    axios.delete("http://localhost:3000/api/cart", { data: {_id : delid , userId: localStorage.getItem("userID")} }).then(res=> cartData()) ;   
     toast({
       title: 'Successfully Deleted',
       status: 'success',

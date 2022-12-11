@@ -48,10 +48,10 @@ export default async function Home(req, res) {
         }
         case "DELETE": {
 
-            const _id = req.body
+            const {_id,userId} = req.body
             console.log(_id)
 
-            const deleteitem = await cartModals.findOneAndDelete({ "productid": _id })
+            const deleteitem = await cartModals.findOneAndDelete({ "productid": _id, "userId":userId })
 
             res.send(deleteitem)
 
