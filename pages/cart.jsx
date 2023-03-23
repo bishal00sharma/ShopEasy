@@ -23,7 +23,7 @@ export default function Cart(){
         let discount =0;
         for(let i=0;i<arr.length;i++){
             let {productid} = arr[i]
-            let data=await axios.get(`http://localhost:3000/api/products/category?findbyid=${productid}`)
+            let data=await axios.get(`https://shopeasy-eight.vercel.app/api/products/category?findbyid=${productid}`)
            totalPrice=totalPrice+ Number(data.data.data.price)||0; 
            discount=discount+ Number(data.data.data.discount_price)||0; 
            console.log(totalPrice)
@@ -40,7 +40,7 @@ export default function Cart(){
 
         const val = localStorage.getItem("userID");
 
-        let dataa = await fetch(`http://localhost:3000/api/cart`, {
+        let dataa = await fetch(`https://shopeasy-eight.vercel.app/api/cart`, {
             method: 'GET',
             headers : {userId : val,"Content-type": "application/json;charset=UTF-8" } 
         })  
@@ -50,32 +50,43 @@ export default function Cart(){
       }
       
       async function deleteItem(delid){ 
-        axios.delete("http://localhost:3000/api/cart", { data: {_id : delid} }).then(res=> cartData()) ;   
+        axios.delete("https://shopeasy-eight.vercel.app/api/cart", { data: {_id : delid} }).then(res=> cartData()) ;   
     }
 
     useEffect(() => {
-        cartData()
+        async function cartData(){
+        const val = localStorage.getItem("userID");
+
+        let dataa = await fetch(`https://shopeasy-eight.vercel.app/api/cart`, {
+            method: 'GET',
+            headers : {userId : val,"Content-type": "application/json;charset=UTF-8" } 
+        })  
+
+        let res= await dataa.json()   
+        getDatas(res)
+    }
+    cartData()
     }, []);
 
 
     return(
         <Box>
             <Flex w="80%" m="auto" h="40%">
-                <Image cursor="pointer" onClick={()=>router.push('/')} w="20%" h="40%" src="/shopeeasy-logo.png" />
-                <Image ml="30" w="45%" src="/bagImg.png"/>
+                <Image alt="" cursor="pointer" onClick={()=>router.push('/')} w="20%" h="40%" src="/shopeeasy-logo.png" />
+                <Image alt="" ml="30" w="45%" src="/bagImg.png"/>
             </Flex>
           
         
         <Box w="80%" m="auto">
-            <Image src="https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg" />
+            <Image alt="" src="https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg" />
             <Button mt="5" colorScheme='blue' onClick={()=>router.replace("/product")}> {"<-  "}Go Back</Button>
             <Flex justifyContent="space-evenly" mt="10">
                 <Box w="80%">
                    
                         {actual&&
                         actual.map((item)=>(
-                            <Flex p="3" boxShadow= "rgba(149, 157, 165, 0.2) 0px 8px 24px" justifyContent="space-evenly">
-                            <Image src={item.image} w="15%" />
+                            <Flex key={item.name} p="3" boxShadow= "rgba(149, 157, 165, 0.2) 0px 8px 24px" justifyContent="space-evenly">
+                            <Image src={item.image} w="15%" alt="" />
                              <Text fontSize="16" pt="10">{item.name}</Text>
                              <Flex pt="30" justifyContent="space-evenly">
                                 <Select placeholder='size'>
@@ -179,9 +190,9 @@ export default function Cart(){
                 </Box>
             </Flex>
         </Box>
-        <Image src="/footerImg.png"/>
+        <Image src="/footerImg.png" alt=""/>
         <hr />
-        <Image src="/secondFooter.png" />
+        <Image src="/secondFooter.png" alt="" />
         </Box>
     )
 } 

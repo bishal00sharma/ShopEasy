@@ -21,7 +21,7 @@ const LeftBox = () => {
     // Fetching all the data and displaying
     const getData = async () => {
         await axios
-            .get("http://localhost:3000/api/products/category")
+            .get("https://shopeasy-eight.vercel.app/api/products/category")
             .then((res) => {
                 setProducts(res.data.data);
             });
@@ -30,7 +30,7 @@ const LeftBox = () => {
     // filterData by brand
     const brandFilterData = async (brandName) => {
         await axios
-            .get(`http://localhost:3000/api/products/category?brand=${brandName}`)
+            .get(`https://shopeasy-eight.vercel.app/api/products/category?brand=${brandName}`)
             .then((res) => {
                 setProducts(res.data.data);
             });
@@ -40,7 +40,7 @@ const LeftBox = () => {
     const filterByPrice = async (el) => {
         let price = Number(el.trim().split("-")[1])
         await axios
-            .get(`http://localhost:3000/api/products/category?price=${price}`)
+            .get(`https://shopeasy-eight.vercel.app/api/products/category?price=${price}`)
             .then((res) => {
                 console.log(res.data)
                 setProducts(res.data);
@@ -51,7 +51,7 @@ const LeftBox = () => {
     const filterByType = async (type) => {
 
         await axios
-            .get(`http://localhost:3000/api/products/category?type=${type}`)
+            .get(`https://shopeasy-eight.vercel.app/api/products/category?type=${type}`)
             .then((res) => {
                 console.log(res.data)
                 setProducts(res.data.data);
@@ -63,7 +63,7 @@ const LeftBox = () => {
         if (cmd == "gt") {
             let price = 8000;
             await axios
-                .get(`http://localhost:3000/api/products/category?price=${price}&cmd=${cmd}`)
+                .get(`https://shopeasy-eight.vercel.app/api/products/category?price=${price}&cmd=${cmd}`)
                 .then((res) => {
                     setProducts(res.data);
                 });
@@ -71,7 +71,7 @@ const LeftBox = () => {
         else if (cmd == 'lt') {
             let price = 10000;
             await axios
-                .get(`http://localhost:3000/api/products/category?price=${price}&cmd=${cmd}`)
+                .get(`https://shopeasy-eight.vercel.app/api/products/category?price=${price}&cmd=${cmd}`)
                 .then((res) => {
                     setProducts(res.data);
                 });
@@ -79,14 +79,14 @@ const LeftBox = () => {
 
         else if (cmd == "gte") {
             await axios
-                .get(`http://localhost:3000/api/products/category?price=8000&cmd=${cmd}`)
+                .get(`https://shopeasy-eight.vercel.app/api/products/category?price=8000&cmd=${cmd}`)
                 .then((res) => {
                     res.data.sort((a, b) => (a.price < b.price ? 1 : -1))
                     setProducts(res.data)
                 });
         }
         else await axios
-            .get(`http://localhost:3000/api/products/category?price=5000&cmd=${cmd}`)
+            .get(`https://shopeasy-eight.vercel.app/api/products/category?price=5000&cmd=${cmd}`)
             .then((res) => {
                 setProducts(res.data)
             });

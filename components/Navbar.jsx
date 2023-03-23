@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Search2Icon } from '@chakra-ui/icons'
 import { Button, Flex, Input, InputGroup, InputRightElement, Text, Box, Image, Divider } from '@chakra-ui/react'
 import {
@@ -29,15 +30,26 @@ const Navbar = () => {
 
   const router = useRouter()
   const [auth, setauth] = useState(false)
-
-
-  useEffect(() => {
+  function sessionFunction(){
     if (session.status == "authenticated") {
       localStorage.setItem("userID",session.data.user.objId)
       setauth(true)
     } else {
       setauth(false)
     }
+  }
+
+
+  useEffect(() => {
+    function sessionFunction(){
+      if (session.status == "authenticated") {
+        localStorage.setItem("userID",session.data.user.objId)
+        setauth(true)
+      } else {
+        setauth(false)
+      }
+    }
+    sessionFunction()
   }, [session.status])
 
   return (

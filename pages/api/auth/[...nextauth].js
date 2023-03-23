@@ -7,8 +7,8 @@ import authmodal from "../../../modals/auth/authmodal";
 
 
 
-const GOOGLE_CLIENT_ID = '1099013241213-kpro4gfoc4shhpu9rijemngqpvi4eupk.apps.googleusercontent.com'
-const GOOGLE_CLIENT_SECRET = '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'
+// const GOOGLE_CLIENT_ID = '145221731588-5at5v5d6obic2sdh9utr4mu0gij68oao.apps.googleusercontent.com'
+// const GOOGLE_CLIENT_SECRET = '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'
 const NEXTAUTH_SECRET = "NEXTAUTH_SECRET"
 const MONGODB_URI = "mongodb+srv://server:server@cluster0.bgu4xhh.mongodb.net/shopeasy"
 const FACEBOOK_CLIENT_ID = '1014907879904094'
@@ -21,8 +21,8 @@ export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
-      clientId: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
     }),
     FacebookProvider({
       clientId: FACEBOOK_CLIENT_ID,

@@ -23,7 +23,7 @@ export default function Sidebar({ changeLinkTarget }) {
           }}
         >
           <Box cursor="pointer">
-            <Image src="/shopeeasy-logo.png" />
+            <Image src="/shopeeasy-logo.png" alt="" />
             {/* <Heading>Shopify</Heading> */}
           </Box>
           <Box

@@ -45,10 +45,25 @@ export default function ProductBox() {
   };
 
   useEffect(() => {
+    const getProductData = async () => {
+      let res = await axios.get(
+        "http://localhost:3000/api/products/category?price=10&cmd=gte"
+      );
+      // console.log(res.data);
+      setAllProductData(res.data);
+    };
     getProductData();
   }, [a]);
 
   useEffect(() => {
+    const trimProductArray = (page) => {
+      let trimmedArr = allProductData.filter((item, index) => {
+        if (index >= 10 * (page - 1) && index < 10 * page) {
+          return item;
+        }
+      });
+      setProductData(trimmedArr);
+    };
     trimProductArray(page);
   }, [allProductData, page]);
 
@@ -75,23 +90,6 @@ export default function ProductBox() {
           <Heading>Products</Heading>
         </Box>
         <Box
-        // onClick={onOpen}
-        // sx={{
-        //   marginRight: "2rem",
-        //   padding: "1rem 2rem",
-        //   backgroundColor: "green.500",
-        //   fontsize: "1.7rem",
-        //   borderRadius: "1rem",
-        //   fontWeight: "bold",
-        //   color: "white",
-        //   cursor: "pointer",
-        //   transition: "0.2s all ease-in-out",
-        //   _hover: {
-        //     backgroundColor: "green.600",
-        //     transform: "scale(0.9)",
-        //     textDecor: "underline",
-        //   },
-        // }}
         >
           <Button
             onClick={onOpen}
@@ -101,7 +99,6 @@ export default function ProductBox() {
           >
             Add Products
           </Button>
-          {/* <Text textAlign="right">Add Products</Text> */}
         </Box>
       </Flex>
       <TableContainer mt="5rem">
@@ -154,12 +151,4 @@ export default function ProductBox() {
   );
 }
 
-// export async function getServerSideProps() {
-//   const data = await axios.get("http://localhost:3000/api/products/category");
-//   console.log(data);
-//   return {
-//     props: {
-//       data: data,
-//     },
-//   };
-// }
+

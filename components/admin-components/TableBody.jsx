@@ -84,7 +84,7 @@ export default function TableBody({ item, sr, setA }) {
           </Box>
         </Td>
         <Td>
-          <Image width="50px" src={item.image} />
+          <Image width="50px" src={item.image} alt="" />
         </Td>
         <Td>{item.price}</Td>
         <Td>{item.type}</Td>

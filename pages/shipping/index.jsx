@@ -17,7 +17,7 @@ export default function Shipping(){
 
   // async function getDatas(val){
    
-  //  let data=await axios.get(`http://localhost:3000/api/products/category?findbyid=${val._id}`)
+  //  let data=await axios.get(`https://shopeasy-eight.vercel.app/api/products/category?findbyid=${val._id}`)
   //  console.log(data)
   //    setCart(data.data.data)
   // }
@@ -28,7 +28,7 @@ export default function Shipping(){
     let discount =0;
     for(let i=0;i<arr.length;i++){
         let {productid} = arr[i]
-        let data=await axios.get(`http://localhost:3000/api/products/category?findbyid=${productid}`)
+        let data=await axios.get(`https://shopeasy-eight.vercel.app/api/products/category?findbyid=${productid}`)
         totalPrice=totalPrice+ Number(data.data.data.price)||0; 
         discount=discount+ Number(data.data.data.discount_price)||0; 
        ans.push(data.data.data)
@@ -44,7 +44,7 @@ export default function Shipping(){
 
     const val = localStorage.getItem("userID");
 
-    let dataa = await fetch(`http://localhost:3000/api/cart`, {
+    let dataa = await fetch(`https://shopeasy-eight.vercel.app/api/cart`, {
         method: 'GET',
         headers : {userId : val,"Content-type": "application/json;charset=UTF-8" } 
     })  
@@ -87,7 +87,7 @@ export default function Shipping(){
       name: "ShopEasy",
       description: "Thanks for purchasing",
       image:
-        "http://localhost:3000/shopeeasy-logo.png",
+        "https://shopeasy-eight.vercel.app/shopeeasy-logo.png",
   
       handler: function (response) {
         alert(response.razorpay_payment_id);
@@ -103,6 +103,18 @@ export default function Shipping(){
   
 
   useEffect(() => {
+    async function cartData(){
+
+      const val = localStorage.getItem("userID");
+  
+      let dataa = await fetch(`https://shopeasy-eight.vercel.app/api/cart`, {
+          method: 'GET',
+          headers : {userId : val,"Content-type": "application/json;charset=UTF-8" } 
+      })  
+  
+      let res= await dataa.json()   
+      getDatas(res)
+    }
     cartData()
     let val=""
     if (localStorage) {
@@ -115,8 +127,8 @@ export default function Shipping(){
     return (
       <Box>
          <Flex h="40%" w="80%" m="auto">
-                <Image w="20%" h="40%" src="/shopeeasy-logo.png" />
-                <Image ml="30" w="45%" src="/deliveryImg.png"/>
+                <Image w="20%" h="40%" src="/shopeeasy-logo.png"  alt=""/>
+                <Image ml="30" w="45%" src="/deliveryImg.png" alt=""/>
             </Flex>
         <Flex justifyContent="space-evenly" w="80%" m="auto" mb="20" mt="20">
             <hr p="10" />
@@ -170,8 +182,8 @@ export default function Shipping(){
         <SimpleGrid columns={4} spacing={10}>
           {
             cart.map((item)=>(
-              <Box>
-              <Image w="24" src={item.image} />
+              <Box key={item.name}>
+              <Image w="24" src={item.image} alt="" />
               <Box>
                 <Text ml="3" fontSize="17">{item.name} </Text>
                 <Text color="orange" ml="3">{item.brand} </Text>

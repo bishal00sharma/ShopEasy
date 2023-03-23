@@ -29,7 +29,7 @@ function ProductAddToCart({ grid, products }) {
         event.preventDefault();
         const id = data.user.objId;
         console.log("objId : -", id, " prodId : -", el._id);
-        await axios.post(`http://localhost:3000/api/cart`, {
+        await axios.post(`https://shopeasy-eight.vercel.app/api/cart`, {
             userId: id,
             productid: el._id,
             quantity: 1,

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Box, Button, Collapse, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Heading, HStack, Image, Input, Link, List, ListIcon, ListItem, SimpleGrid, SliderThumb, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Tooltip, UnorderedList, useDisclosure, useToast } from '@chakra-ui/react';
 import { useEffect, useRef, useState, } from 'react';
 import { RiShoppingBagLine  } from 'react-icons/ri';
@@ -9,7 +10,6 @@ import styles from '../../styles/Home.module.css';
 import Navbar from "../../components/Navbar"
 import { useRouter } from 'next/router';
 import axios from "axios";
-import  App  from './App/App';
 import { useSession } from 'next-auth/react';
 
 
@@ -50,7 +50,7 @@ export default function SingleProduct() {
 
       console.log("objId : -", id, " prodId : -", localData._id)
 
-      await axios.post(`http://localhost:3000/api/cart`, {
+      await axios.post(`https://shopeasy-eight.vercel.app/api/cart`, {
           userId: id,
           productid: localData._id,
           quantity: 1
@@ -74,7 +74,7 @@ export default function SingleProduct() {
       
       for(let i=0;i<arr.length;i++){
           let {productid} = arr[i]
-          let data=await axios.get(`http://localhost:3000/api/products/category?findbyid=${productid}`)
+          let data=await axios.get(`https://shopeasy-eight.vercel.app/api/products/category?findbyid=${productid}`)
           discount=discount+ Number(data.data.data.discount_price)||0; 
          ans.push(data.data.data)
       }
@@ -89,7 +89,7 @@ export default function SingleProduct() {
 
       const val = localStorage.getItem("userID");
 
-      let dataa = await fetch(`http://localhost:3000/api/cart`, {
+      let dataa = await fetch(`https://shopeasy-eight.vercel.app/api/cart`, {
           method: 'GET',
           headers : {userId : val,"Content-type": "application/json;charset=UTF-8" } 
       })  
@@ -194,9 +194,20 @@ export default function SingleProduct() {
       isClosable: true,
     })
   }
-   useEffect(() => {
-   
+  function getLocalData(){
     if (localStorage) {
+      const tokendata = localStorage.getItem("token");
+   
+      const val = JSON.parse(tokendata)
+      setLocalData(val)
+      console.log("localData",localData)
+     setImg(val.image)
+     }
+  }
+  
+   useEffect(() => {
+    function getLocalData(){
+      if (localStorage) {
         const tokendata = localStorage.getItem("token");
      
         const val = JSON.parse(tokendata)
@@ -204,7 +215,8 @@ export default function SingleProduct() {
         console.log("localData",localData)
        setImg(val.image)
        }
-       
+    }
+    getLocalData()
   }, []);
 
     return (
@@ -378,7 +390,7 @@ export default function SingleProduct() {
                         actual.map((item) => (
                       
                           <Flex key={item.image} mb="7" justifyContent="space-evenly">
-                            <Image w="40%" src={item.image} />
+                            <Image w="40%" src={item.image} alt=""/>
                             <Box>
                               <Text ml="10%">{item.name}</Text>
                               <Text fontSize="20" color="red.500" ml="10%" mt="2">₹ {item.discount_price}</Text>
@@ -457,9 +469,9 @@ export default function SingleProduct() {
       <Box cursor="pointer" _hover={{color:"red"}} fontSize="2xl" fontWeight="600" boxShadow= "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px" color="green" bgColor="gray.100" p="10"> Brands → </Box>
      </Flex>
      <Box>
-      <App />
+     
      </Box>
-     <Image src="/secondFooter.png" mt="30" />
+     <Image src="/secondFooter.png" mt="30" alt="" />
         </>
   );
 }
